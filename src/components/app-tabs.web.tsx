@@ -1,12 +1,4 @@
-import {
-  Tabs,
-  TabList,
-  TabTrigger,
-  TabSlot,
-  TabTriggerSlotProps,
-  TabListProps,
-} from 'expo-router/ui';
-import { SymbolView } from 'expo-symbols';
+import { Link, Slot } from 'expo-router';
 import { Pressable, useColorScheme, View, StyleSheet } from 'react-native';
 
 import { ExternalLink } from './external-link';
@@ -16,100 +8,96 @@ import { ThemedView } from './themed-view';
 import { Colors, MaxContentWidth, Spacing } from '@/constants/theme';
 
 export default function AppTabs() {
-  return (
-    <Tabs>
-      <TabSlot style={{ height: '100%' }} />
-      <TabList asChild>
-        <CustomTabList>
-          <TabTrigger name="parent" href="/parent/dashboard" asChild>
-            <TabButton>Parent</TabButton>
-          </TabTrigger>
-          <TabTrigger name="teen" href="/teen/today" asChild>
-            <TabButton>Teen</TabButton>
-          </TabTrigger>
-        </CustomTabList>
-      </TabList>
-    </Tabs>
-  );
-}
-
-export function TabButton({ children, isFocused, ...props }: TabTriggerSlotProps) {
-  return (
-    <Pressable {...props} style={({ pressed }) => pressed && styles.pressed}>
-      <ThemedView
-        type={isFocused ? 'backgroundSelected' : 'backgroundElement'}
-        style={styles.tabButtonView}>
-        <ThemedText type="small" themeColor={isFocused ? 'text' : 'textSecondary'}>
-          {children}
-        </ThemedText>
-      </ThemedView>
-    </Pressable>
-  );
-}
-
-export function CustomTabList(props: TabListProps) {
   const scheme = useColorScheme();
   const colors = Colors[scheme === 'unspecified' ? 'light' : scheme];
 
   return (
-    <View {...props} style={styles.tabListContainer}>
-      <ThemedView type="backgroundElement" style={styles.innerContainer}>
-        <ThemedText type="smallBold" style={styles.brandText}>
+    <View style={styles.wrapper as any}>
+      <ThemedView type="backgroundElement" style={styles.innerContainer as any}>
+        <ThemedText type="smallBold" style={styles.brandText as any}>
           Expo Starter
         </ThemedText>
 
-        {props.children}
+        <View style={styles.group as any}>
+          <Link href="/parent/dashboard" asChild>
+            <Pressable style={styles.link as any}>
+              <ThemedText type="small">Dashboard</ThemedText>
+            </Pressable>
+          </Link>
+          <Link href="/parent/responsibilities" asChild>
+            <Pressable style={styles.link as any}>
+              <ThemedText type="small">Responsabilités</ThemedText>
+            </Pressable>
+          </Link>
+          <Link href="/parent/validations" asChild>
+            <Pressable style={styles.link as any}>
+              <ThemedText type="small">Validations</ThemedText>
+            </Pressable>
+          </Link>
+          <Link href="/parent/rewards" asChild>
+            <Pressable style={styles.link as any}>
+              <ThemedText type="small">Récompenses</ThemedText>
+            </Pressable>
+          </Link>
+          <Link href="/parent/settings" asChild>
+            <Pressable style={styles.link as any}>
+              <ThemedText type="small">Paramètres</ThemedText>
+            </Pressable>
+          </Link>
+        </View>
+
+        <View style={styles.group as any}>
+          <Link href="/teen/today" asChild>
+            <Pressable style={styles.link as any}>
+              <ThemedText type="small">Today</ThemedText>
+            </Pressable>
+          </Link>
+          <Link href="/teen/initiatives" asChild>
+            <Pressable style={styles.link as any}>
+              <ThemedText type="small">Initiatives</ThemedText>
+            </Pressable>
+          </Link>
+          <Link href="/teen/rewards" asChild>
+            <Pressable style={styles.link as any}>
+              <ThemedText type="small">Rewards</ThemedText>
+            </Pressable>
+          </Link>
+          <Link href="/teen/progress" asChild>
+            <Pressable style={styles.link as any}>
+              <ThemedText type="small">Progress</ThemedText>
+            </Pressable>
+          </Link>
+        </View>
 
         <ExternalLink href="https://docs.expo.dev" asChild>
-          <Pressable style={styles.externalPressable}>
+          <Pressable style={styles.externalPressable as any}>
             <ThemedText type="link">Docs</ThemedText>
-            <SymbolView
-              tintColor={colors.text}
-              name={{ ios: 'arrow.up.right.square', web: 'link' }}
-              size={12}
-            />
           </Pressable>
         </ExternalLink>
       </ThemedView>
+
+      <View style={styles.slotContainer as any}>
+        <Slot />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  tabListContainer: {
-    position: 'absolute',
-    width: '100%',
-    padding: Spacing.three,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
+  wrapper: { width: '100%' },
   innerContainer: {
     paddingVertical: Spacing.two,
     paddingHorizontal: Spacing.five,
     borderRadius: Spacing.five,
     flexDirection: 'row',
     alignItems: 'center',
-    flexGrow: 1,
     gap: Spacing.two,
     maxWidth: MaxContentWidth,
+    alignSelf: 'center',
   },
-  brandText: {
-    marginRight: 'auto',
-  },
-  pressed: {
-    opacity: 0.7,
-  },
-  tabButtonView: {
-    paddingVertical: Spacing.one,
-    paddingHorizontal: Spacing.three,
-    borderRadius: Spacing.three,
-  },
-  externalPressable: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: Spacing.one,
-    marginLeft: Spacing.three,
-  },
+  brandText: { flex: 1 },
+  group: { flexDirection: 'row', gap: Spacing.two, alignItems: 'center' },
+  link: { paddingVertical: Spacing.one, paddingHorizontal: Spacing.three, borderRadius: Spacing.three },
+  externalPressable: { marginLeft: Spacing.three },
+  slotContainer: { paddingTop: Spacing.six },
 });
