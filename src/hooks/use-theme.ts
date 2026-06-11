@@ -10,8 +10,14 @@ export type ThemeShape = Record<string, any>;
 
 export function useTheme(): ThemeShape {
   const scheme = useColorScheme();
-  const resolved = scheme === 'unspecified' ? 'dark' : (scheme as 'light' | 'dark');
+  const resolved = !scheme || scheme === 'unspecified' ? 'dark' : (scheme as 'light' | 'dark');
   const full = getTheme(resolved);
-  // flatten colors for backward compatibility with existing components
-  return { ...full.colors, spacing: full.spacing, radius: full.radius, typography: full.typography } as ThemeShape;
+
+  // Return full theme object under `colors` while preserving top-level color shortcuts
+  // to remain backward-compatible with older components that expect theme.background, theme.text, etc.
+  return {
+    ...full,
+    // spread color keys at top level (background, text, ...)
+    ...full.colors,
+  } as ThemeShape;
 }
