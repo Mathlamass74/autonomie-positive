@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-// mock expo-sqlite openDatabase
+// ensure native platform and mock expo-sqlite openDatabase
+vi.mock('react-native', () => ({ Platform: { OS: 'ios' } }))
 vi.mock('expo-sqlite', () => ({
   openDatabase: () => ({
     transaction: (cb: any) => {
