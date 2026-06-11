@@ -36,3 +36,12 @@ export const softDeleteRewardRequest = async (id: string): Promise<void> => {
   const now = new Date().toISOString()
   await executeSql(`UPDATE reward_requests SET deleted_at = ? WHERE id = ?`, [now, id])
 }
+
+export const countRequestsByRewardAndPeriod = async (rewardId: string, periodStart: string, periodEnd: string): Promise<number> => {
+  const sql = `SELECT COUNT(*) as cnt FROM reward_requests WHERE reward_id = ? AND requested_at BETWEEN ? AND ? AND deleted_at IS NULL`;
+  const res = await executeSql(sql, [rewardId, periodStart, periodEnd])
+  const rows = res && (res as any).rows && (res as any).rows._array ? (res as any).rows._array : []
+  if (rows.length === 0) return 0
+  const first = rows[0] as any
+  return first.cnt ?? 0
+}

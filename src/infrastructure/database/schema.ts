@@ -4,10 +4,13 @@ export const CREATE_TABLES_SQL: string[] = [
   `CREATE TABLE IF NOT EXISTS families (
     id TEXT PRIMARY KEY,
     name TEXT,
+    invitation_code TEXT,
+    language TEXT,
     settings TEXT,
     created_at TEXT,
     updated_at TEXT,
-    deleted_at TEXT
+    deleted_at TEXT,
+    sync_status TEXT DEFAULT 'local'
   );`,
 
   `CREATE TABLE IF NOT EXISTS parents (
@@ -18,7 +21,8 @@ export const CREATE_TABLES_SQL: string[] = [
     preferences TEXT,
     created_at TEXT,
     updated_at TEXT,
-    deleted_at TEXT
+    deleted_at TEXT,
+    sync_status TEXT DEFAULT 'local'
   );`,
 
   `CREATE TABLE IF NOT EXISTS teens (
@@ -29,7 +33,8 @@ export const CREATE_TABLES_SQL: string[] = [
     active INTEGER,
     created_at TEXT,
     updated_at TEXT,
-    deleted_at TEXT
+    deleted_at TEXT,
+    sync_status TEXT DEFAULT 'local'
   );`,
 
   `CREATE TABLE IF NOT EXISTS responsibilities (
@@ -44,7 +49,8 @@ export const CREATE_TABLES_SQL: string[] = [
     active INTEGER,
     created_at TEXT,
     updated_at TEXT,
-    deleted_at TEXT
+    deleted_at TEXT,
+    sync_status TEXT DEFAULT 'local'
   );`,
 
   `CREATE TABLE IF NOT EXISTS responsibility_occurrences (
@@ -56,7 +62,8 @@ export const CREATE_TABLES_SQL: string[] = [
     submission_text TEXT,
     created_at TEXT,
     updated_at TEXT,
-    deleted_at TEXT
+    deleted_at TEXT,
+    sync_status TEXT DEFAULT 'local'
   );`,
 
   `CREATE TABLE IF NOT EXISTS initiatives (
@@ -69,7 +76,8 @@ export const CREATE_TABLES_SQL: string[] = [
     parent_comment TEXT,
     created_at TEXT,
     updated_at TEXT,
-    deleted_at TEXT
+    deleted_at TEXT,
+    sync_status TEXT DEFAULT 'local'
   );`,
 
   `CREATE TABLE IF NOT EXISTS validations (
@@ -82,7 +90,8 @@ export const CREATE_TABLES_SQL: string[] = [
     comment TEXT,
     created_at TEXT,
     updated_at TEXT,
-    deleted_at TEXT
+    deleted_at TEXT,
+    sync_status TEXT DEFAULT 'local'
   );`,
 
   `CREATE TABLE IF NOT EXISTS rewards (
@@ -97,7 +106,8 @@ export const CREATE_TABLES_SQL: string[] = [
     active INTEGER,
     created_at TEXT,
     updated_at TEXT,
-    deleted_at TEXT
+    deleted_at TEXT,
+    sync_status TEXT DEFAULT 'local'
   );`,
 
   `CREATE TABLE IF NOT EXISTS reward_requests (
@@ -111,7 +121,8 @@ export const CREATE_TABLES_SQL: string[] = [
     parent_comment TEXT,
     created_at TEXT,
     updated_at TEXT,
-    deleted_at TEXT
+    deleted_at TEXT,
+    sync_status TEXT DEFAULT 'local'
   );`,
 
   `CREATE TABLE IF NOT EXISTS freedoms (
@@ -122,7 +133,8 @@ export const CREATE_TABLES_SQL: string[] = [
     revocable INTEGER,
     created_at TEXT,
     updated_at TEXT,
-    deleted_at TEXT
+    deleted_at TEXT,
+    sync_status TEXT DEFAULT 'local'
   );`,
 
   `CREATE TABLE IF NOT EXISTS freedom_levels (
@@ -136,7 +148,8 @@ export const CREATE_TABLES_SQL: string[] = [
     active INTEGER,
     created_at TEXT,
     updated_at TEXT,
-    deleted_at TEXT
+    deleted_at TEXT,
+    sync_status TEXT DEFAULT 'local'
   );`,
 
   `CREATE TABLE IF NOT EXISTS trust_events (
@@ -147,7 +160,10 @@ export const CREATE_TABLES_SQL: string[] = [
     type TEXT,
     source_id TEXT,
     meta TEXT,
-    created_at TEXT
+    created_at TEXT,
+    updated_at TEXT,
+    deleted_at TEXT,
+    sync_status TEXT DEFAULT 'local'
   );`,
 
   `CREATE TABLE IF NOT EXISTS presence_periods (
@@ -160,6 +176,26 @@ export const CREATE_TABLES_SQL: string[] = [
     note TEXT,
     created_at TEXT,
     updated_at TEXT,
-    deleted_at TEXT
+    deleted_at TEXT,
+    sync_status TEXT DEFAULT 'local'
   );`
+]
+
+// Indexes
+export const CREATE_INDEXES_SQL: string[] = [
+  `CREATE INDEX IF NOT EXISTS idx_families_created_at ON families(created_at);`,
+  `CREATE INDEX IF NOT EXISTS idx_parents_family_id ON parents(family_id);`,
+  `CREATE INDEX IF NOT EXISTS idx_teens_family_id ON teens(family_id);`,
+  `CREATE INDEX IF NOT EXISTS idx_teens_created_at ON teens(created_at);`,
+  `CREATE INDEX IF NOT EXISTS idx_responsibilities_family_id ON responsibilities(family_id);`,
+  `CREATE INDEX IF NOT EXISTS idx_occurrences_teen_id ON responsibility_occurrences(teen_id);`,
+  `CREATE INDEX IF NOT EXISTS idx_occurrences_date ON responsibility_occurrences(date);`,
+  `CREATE INDEX IF NOT EXISTS idx_initiatives_family_id ON initiatives(family_id);`,
+  `CREATE INDEX IF NOT EXISTS idx_validations_family_id ON validations(family_id);`,
+  `CREATE INDEX IF NOT EXISTS idx_rewards_family_id ON rewards(family_id);`,
+  `CREATE INDEX IF NOT EXISTS idx_reward_requests_reward_id ON reward_requests(reward_id);`,
+  `CREATE INDEX IF NOT EXISTS idx_reward_requests_requested_at ON reward_requests(requested_at);`,
+  `CREATE INDEX IF NOT EXISTS idx_freedom_levels_teen_id ON freedom_levels(teen_id);`,
+  `CREATE INDEX IF NOT EXISTS idx_trust_events_family_id ON trust_events(family_id);`,
+  `CREATE INDEX IF NOT EXISTS idx_presence_teen_id ON presence_periods(teen_id);`
 ]
