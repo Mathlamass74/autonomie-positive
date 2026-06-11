@@ -21,6 +21,7 @@
     "initiativesMonth": "Initiatives this month",
     "todayResponsibilities": "Today's responsibilities",
     "pendingRewards": "Pending requests"
+    ,"noPendingValidations":"No pending submissions"
   },
   "teenScreens": {
     "today": "Today",
@@ -38,6 +39,19 @@
     "loading": "Loading...",
     "error": "An error occurred",
     "points": "pts"
+  }
+
+  ,"mock":{
+    "ranger_chambre":"Tidy the room",
+    "mettre_table":"Set the table",
+    "ecran_30":"30 minutes screen",
+    "level_responsable":"Responsible",
+    "brosser_dents":"Brush teeth",
+    "preparer_sac":"Prepare bag",
+    "range_salon":"I tidied the living room",
+    "inviter_ami":"Invite a friend",
+    "vider_lave_vaisselle":"Empty the dishwasher",
+    "cinema":"Cinema outing"
   }
 
   ,"mock":{

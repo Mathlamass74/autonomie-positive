@@ -21,6 +21,7 @@
     "initiativesMonth": "Initiatives ce mois",
     "todayResponsibilities": "Responsabilités du jour",
     "pendingRewards": "Demandes en attente"
+    ,"noPendingValidations":"Aucune soumission en attente"
   },
   "teenScreens": {
     "today": "Aujourd'hui",
