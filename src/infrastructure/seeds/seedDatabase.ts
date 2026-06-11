@@ -25,6 +25,8 @@ export const seedDatabase = async (): Promise<void> => {
 
   // create teen and parent
   await createTeen({ id: demoTeen.id, familyId: demoTeen.familyId, name: demoTeen.name, age: demoTeen.age, active: demoTeen.active } as any)
+  // create parent record
+  await executeSql(`INSERT INTO parents (id, family_id, name, role, created_at) VALUES (?,?,?,?,?)`, [demoParent.id, demoParent.familyId, demoParent.name, demoParent.role, new Date().toISOString()])
 
   // responsibilities
   for (const r of demoResponsibilities) {

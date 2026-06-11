@@ -7,6 +7,7 @@ export default function useTeen() {
   const { family, loading: familyLoading } = useFamily()
   const [teen, setTeen] = useState<Teen | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
     let mounted = true
@@ -17,8 +18,9 @@ export default function useTeen() {
         const list = await listTeensByFamily(family.id)
         if (!mounted) return
         setTeen(list.length ? list[0] : null)
+        setError(null)
       } catch (e) {
-        // ignore
+        setError(e as Error)
       } finally {
         if (mounted) setLoading(false)
       }
@@ -27,5 +29,5 @@ export default function useTeen() {
     return () => { mounted = false }
   }, [family, familyLoading])
 
-  return { teen, loading: familyLoading || loading }
+  return { teen, loading: familyLoading || loading, error }
 }

@@ -6,6 +6,7 @@ export default function useResponsibilities() {
   const { family, loading: familyLoading } = useFamily()
   const [items, setItems] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
     let mounted = true
@@ -16,8 +17,9 @@ export default function useResponsibilities() {
         const list = await listResponsibilitiesByFamily(family.id)
         if (!mounted) return
         setItems(list)
+        setError(null)
       } catch (e) {
-        // ignore
+        setError(e as Error)
       } finally {
         if (mounted) setLoading(false)
       }
@@ -26,5 +28,5 @@ export default function useResponsibilities() {
     return () => { mounted = false }
   }, [family, familyLoading])
 
-  return { items, loading }
+  return { items, loading, error }
 }
