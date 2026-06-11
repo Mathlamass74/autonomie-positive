@@ -1,5 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 
+// Ensure react-native Platform resolves to a native platform for this test
+vi.mock('react-native', () => ({ Platform: { OS: 'ios' } }))
 vi.mock('../../src/infrastructure/database/database', () => ({ initLocalDatabase: vi.fn() }))
 import { initLocalDatabase } from '../../src/infrastructure/database/database'
 import { initApp } from '../../src/providers/initApp'

@@ -1,10 +1,24 @@
-import * as SQLite from 'expo-sqlite'
+import { Platform } from 'react-native'
 
 const DB_NAME = 'autonomie-positive.db'
-// types in expo-sqlite typings vary; cast to any for runtime call
-const db: any = (SQLite as any).openDatabase ? (SQLite as any).openDatabase(DB_NAME) : (SQLite as any).openDatabaseSync ? (SQLite as any).openDatabaseSync(DB_NAME) : null
+let _db: any = null
 
-export const executeSql = (sql: string, params: any[] = []): Promise<any> => {
+const ensureDb = async (): Promise<any> => {
+  if (_db) return _db
+  const pkg = 'expo' + '-sqlite'
+  const sqlite = await import(pkg)
+  const anySqlite: any = sqlite
+  _db = anySqlite.openDatabase ? anySqlite.openDatabase(DB_NAME) : anySqlite.openDatabaseSync ? anySqlite.openDatabaseSync(DB_NAME) : null
+  return _db
+}
+
+export const executeSql = async (sql: string, params: any[] = []): Promise<any> => {
+  if (Platform && Platform.OS === 'web') {
+    // On web we avoid loading expo-sqlite; return empty rows to keep the app running
+    return { rows: { _array: [] } }
+  }
+
+  const db = await ensureDb()
   return new Promise((resolve, reject) => {
     if (!db) return reject(new Error('No database available'))
     db.transaction((tx: any) => {
@@ -26,4 +40,4 @@ export const initLocalDatabase = async (): Promise<void> => {
   await runMigrations()
 }
 
-export default db
+export default _db
