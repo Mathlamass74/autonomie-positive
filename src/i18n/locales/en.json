@@ -29,7 +29,8 @@
     "progress": "Progress",
     "level": "Level",
     "score": "Autonomy score",
-    "series": "Current streak"
+    "series": "Current streak",
+    "noInitiatives": "No initiatives yet — try suggesting one!"
   },
   "common": {
     "noData": "No data",

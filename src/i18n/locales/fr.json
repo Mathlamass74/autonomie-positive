@@ -29,7 +29,8 @@
     "progress": "Progression",
     "level": "Niveau",
     "score": "Score d'autonomie",
-    "series": "Série actuelle"
+    "series": "Série actuelle",
+    "noInitiatives": "Aucune initiative pour le moment — proposez-en une !"
   },
   "common": {
     "noData": "Aucune donnée",
