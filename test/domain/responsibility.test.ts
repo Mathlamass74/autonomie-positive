@@ -13,7 +13,7 @@ describe('responsibility service', () => {
       createdAt: new Date().toISOString()
     }
     const occ = createOccurrence(responsibility as any, 't1', '2026-06-11', 'fait')
-    const { occurrence, event } = validateOccurrence(occ, 'p1')
+    const { occurrence, event } = validateOccurrence(occ, 'p1', responsibility as any)
     expect(occurrence.status).toBe('validated')
     expect(event).toBeDefined()
     expect(event?.type).toBe('ResponsibilityValidated')

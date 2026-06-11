@@ -1,6 +1,7 @@
 import { Initiative, InitiativeId } from '../entities/Initiative'
 import { InitiativeStatus } from '../entities/enums'
 import { TrustEvent } from '../entities/TrustEvent'
+import { createTrustEvent } from './trustEventFactory'
 
 export const createInitiative = (
   familyId: string,
@@ -26,15 +27,14 @@ export const validateInitiative = (
 ): { initiative: Initiative; event: TrustEvent } => {
   const now = new Date().toISOString()
   const updated: Initiative = { ...initiative, status: InitiativeStatus.Validated }
-  const event: TrustEvent = {
-    id: `trust:init:${initiative.id}:${now}`,
+  const event = createTrustEvent({
     familyId: initiative.familyId,
     teenId: initiative.teenId,
     parentId,
     type: 'InitiativeValidated',
     sourceId: initiative.id,
     createdAt: now
-  }
+  })
   return { initiative: updated, event }
 }
 

@@ -1,5 +1,6 @@
 import { Responsibility, ResponsibilityOccurrence, ResponsibilityId } from '../entities/Responsibility'
 import { TrustEvent } from '../entities/TrustEvent'
+import { createTrustEvent } from './trustEventFactory'
 
 export const createOccurrence = (
   responsibility: Responsibility,
@@ -19,18 +20,19 @@ export const createOccurrence = (
 
 export const validateOccurrence = (
   occurrence: ResponsibilityOccurrence,
-  parentId: string
+  parentId: string,
+  responsibility: Responsibility
 ): { occurrence: ResponsibilityOccurrence; event?: TrustEvent } => {
   const now = new Date().toISOString()
   const updated: ResponsibilityOccurrence = { ...occurrence, status: 'validated' }
-  const event: TrustEvent = {
-    id: `trust:${updated.id}:${now}`,
-    familyId: '',
+  const event = createTrustEvent({
+    familyId: responsibility.familyId,
     teenId: updated.teenId,
+    parentId,
     type: 'ResponsibilityValidated',
     sourceId: updated.id,
     createdAt: now
-  }
+  })
   return { occurrence: updated, event }
 }
 
