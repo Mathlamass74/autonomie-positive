@@ -3,13 +3,21 @@ import { ThemedText } from '@/components/themed-text';
 import { AppScreen } from '@/components/ui/AppScreen';
 import AppCard from '@/components/ui/AppCard';
 import MetricCard from '@/components/ui/MetricCard';
-import { teenTodayMock } from '@/services/mock-data';
+import useTeen from '@/hooks/useTeen';
+import useResponsibilities from '@/hooks/useResponsibilities';
 import { useTranslation } from 'react-i18next';
 import useResponsive from '@/hooks/use-responsive';
 
 export default function TeenToday() {
   const { t } = useTranslation();
-  const data = teenTodayMock;
+  const { teen } = useTeen()
+  const { items: responsibilities } = useResponsibilities()
+
+  const data = {
+    levelKey: 'mock.level_responsable',
+    score: 0,
+    responsibilities: responsibilities.map((r: any) => ({ id: r.id, titleKey: r.title, done: false }))
+  }
 
   const { isTablet } = useResponsive();
 

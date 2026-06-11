@@ -14,6 +14,12 @@ export const getRewardById = async (id: string): Promise<Reward | null> => {
   return { id: r.id, familyId: r.family_id, title: r.title, description: r.description, type: r.type, rarity: r.rarity, costPoints: r.cost_points, ceiling: r.ceiling, active: !!r.active }
 }
 
+export const listRewardsByFamily = async (familyId: string): Promise<Reward[]> => {
+  const res = await executeSql(`SELECT * FROM rewards WHERE family_id = ? AND deleted_at IS NULL`, [familyId])
+  const rows = res && res.rows && res.rows._array ? res.rows._array : []
+  return rows.map((r: any) => ({ id: r.id, familyId: r.family_id, title: r.title, description: r.description, type: r.type, rarity: r.rarity, costPoints: r.cost_points, ceiling: r.ceiling, active: !!r.active }))
+}
+
 export const createRewardRequest = async (rr: RewardRequest): Promise<void> => {
   await executeSql(`INSERT INTO reward_requests (id, reward_id, teen_id, family_id, status, requested_at) VALUES (?,?,?,?,?,?)`, [rr.id, rr.rewardId, rr.teenId, rr.familyId, rr.status, rr.requestedAt])
 }

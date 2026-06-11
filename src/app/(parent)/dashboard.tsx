@@ -3,13 +3,26 @@ import { ThemedText } from '@/components/themed-text';
 import { AppScreen } from '@/components/ui/AppScreen';
 import MetricCard from '@/components/ui/MetricCard';
 import AppCard from '@/components/ui/AppCard';
-import { parentDashboardMock } from '@/services/mock-data';
+import useFamily from '@/hooks/useFamily';
+import useResponsibilities from '@/hooks/useResponsibilities';
+import useRewards from '@/hooks/useRewards';
 import { useTranslation } from 'react-i18next';
 import useResponsive from '@/hooks/use-responsive';
 
 export default function ParentDashboard() {
   const { t } = useTranslation();
-  const data = parentDashboardMock;
+  const { family, loading: familyLoading } = useFamily();
+  const { items: responsibilities } = useResponsibilities();
+  const { items: rewards } = useRewards();
+
+  const data = {
+    score: 0,
+    currentSeries: 0,
+    pointsMonth: 0,
+    initiativesMonth: 0,
+    todayResponsibilities: responsibilities.map((r: any) => ({ id: r.id, titleKey: r.title })),
+    pendingRewards: rewards.map((p: any) => ({ id: p.id, titleKey: p.title, points: p.costPoints }))
+  }
 
   const { isTablet } = useResponsive();
 
@@ -25,9 +38,9 @@ export default function ParentDashboard() {
 
             <View style={styles.section}>
               <ThemedText type="subtitle">{t('parentScreens.todayResponsibilities')}</ThemedText>
-              {data.todayResponsibilities.map((r) => (
-                <ThemedText key={r.id}>• {t(r.titleKey)}</ThemedText>
-              ))}
+                  {data.todayResponsibilities.map((r) => (
+                    <ThemedText key={r.id}>• {t(r.titleKey)}</ThemedText>
+                  ))}
             </View>
           </View>
 
