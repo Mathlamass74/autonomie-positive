@@ -1,0 +1,49 @@
+{
+  "app": {
+    "parent": "Parent",
+    "teen": "Adolescent",
+    "home": "Accueil",
+    "explore": "Explorer"
+  },
+  "tabs": {
+    "parent": "Parent",
+    "teen": "Adolescent"
+  },
+  "parentScreens": {
+    "dashboard": "Tableau de bord",
+    "responsibilities": "Responsabilités",
+    "validations": "Validations",
+    "rewards": "Récompenses",
+    "settings": "Paramètres",
+    "score": "Score d'autonomie",
+    "currentSeries": "Série actuelle",
+    "pointsMonth": "Points ce mois",
+    "initiativesMonth": "Initiatives ce mois",
+    "todayResponsibilities": "Responsabilités du jour",
+    "pendingRewards": "Demandes en attente"
+  },
+  "teenScreens": {
+    "today": "Aujourd'hui",
+    "initiatives": "Initiatives",
+    "rewards": "Récompenses",
+    "progress": "Progression",
+    "level": "Niveau",
+    "score": "Score d'autonomie",
+    "series": "Série actuelle"
+  },
+  "common": {
+    "noData": "Aucune donnée",
+    "seeAll": "Voir tout"
+  }
+
+  ,"mock":{
+    "ranger_chambre":"Ranger la chambre",
+    "mettre_table":"Mettre la table",
+    "ecran_30":"30 minutes d’écran",
+    "level_responsable":"Responsable",
+    "brosser_dents":"Se brosser les dents",
+    "preparer_sac":"Préparer le sac",
+    "range_salon":"J’ai rangé le salon",
+    "cinema":"Sortie au cinéma"
+  }
+}
