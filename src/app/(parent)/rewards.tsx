@@ -2,18 +2,23 @@ import { StyleSheet } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { useTranslation } from 'react-i18next';
-import { rewardsMock } from '@/services/mock-data';
+import useRewards from '@/hooks/useRewards';
 
 export default function Rewards() {
   const { t } = useTranslation();
-    return (
-      <ThemedView style={styles.container}>
-        <ThemedText type="title">{t('parentScreens.rewards')}</ThemedText>
-        {rewardsMock.map((r) => (
-          <ThemedText key={r.id}>• {t(r.titleKey)} — {r.cost} pts</ThemedText>
-        ))}
-      </ThemedView>
-    );
+  const { items: rewards, loading, error } = useRewards()
+
+  return (
+    <ThemedView style={styles.container}>
+      <ThemedText type="title">{t('parentScreens.rewards')}</ThemedText>
+      {loading && <ThemedText type="subtitle">{t('common.loading')}</ThemedText>}
+      {error && <ThemedText type="subtitle">{t('common.error')}: {error.message}</ThemedText>}
+      {!loading && !error && rewards.length === 0 && <ThemedText type="subtitle">{t('common.noData')}</ThemedText>}
+      {!loading && !error && rewards.map((r: any) => (
+        <ThemedText key={r.id}>• {t(r.title)} — {r.costPoints} {t('common.points')}</ThemedText>
+      ))}
+    </ThemedView>
+  );
 }
 
 const styles = StyleSheet.create({ container: { flex: 1, padding: 16 } });

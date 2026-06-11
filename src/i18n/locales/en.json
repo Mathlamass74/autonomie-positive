@@ -33,7 +33,10 @@
   },
   "common": {
     "noData": "No data",
-    "seeAll": "See all"
+    "seeAll": "See all",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "points": "pts"
   }
 
   ,"mock":{
