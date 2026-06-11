@@ -11,9 +11,9 @@ export default function Validations() {
   return (
     <ThemedView style={styles.container}>
       <ThemedText type="title">{t('parentScreens.validations')}</ThemedText>
-      {loading && <ThemedText type="subtitle">{t('common.loading')}</ThemedText>}
-      {error && <ThemedText type="subtitle">{t('common.error')}: {error.message}</ThemedText>}
-      {!loading && !error && validations.length === 0 && <ThemedText type="subtitle">{t('parentScreens.noPendingValidations')}</ThemedText>}
+      {loading && <ThemedText>{t('common.loading')}</ThemedText>}
+      {error && <ThemedText>{t('common.error')}: {error.message}</ThemedText>}
+      {!loading && !error && validations.length === 0 && <ThemedText>{t('parentScreens.noPendingValidations')}</ThemedText>}
       {!loading && !error && validations.map((v: any) => (
         <ThemedText key={v.id}>• {v.targetType === 'responsibility' ? t('common.submissionResponsibility') : t('common.submissionInitiative')}</ThemedText>
       ))}

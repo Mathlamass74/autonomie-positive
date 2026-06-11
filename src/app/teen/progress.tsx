@@ -3,12 +3,11 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { useTranslation } from 'react-i18next';
 
-export default function Settings() {
+export default function Progress() {
   const { t } = useTranslation();
   return (
     <ThemedView style={styles.container}>
-      <ThemedText type="title">{t('parentScreens.settings')}</ThemedText>
-      <ThemedText>{t('common.noData')}</ThemedText>
+      <ThemedText type="title">{t('teenScreens.progress')}</ThemedText>
     </ThemedView>
   );
 }
